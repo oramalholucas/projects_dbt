@@ -33,4 +33,17 @@ sources:
         columns:
           - name: customer_id
             description: id unico da tabela
+
       - name: order_details
+
+      - name: products
+        description: Tabela contendo a listagem de products do ERP Northwind
+        columns:
+          - name: product_id
+            description: id unico da tabela
+
+      - name: suppliers
+        description: Tabela contendo a listagem de suppliers do ERP Northwind
+        columns:
+          - name: supplier_id
+            description: id unico da tabela
