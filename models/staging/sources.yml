@@ -1,0 +1,49 @@
+version: 2
+
+sources:
+  - name: northwind
+    description: Dados do ERP Northwind
+    database: curso-etl-101  
+    schema: erp_northwind  
+    tables:
+      - name: orders
+        freshness:
+          warn_after:
+            count: 5000
+            period: day
+          error_after:
+            count: 10000
+            period: day
+        loaded_at_field: cast(order_date as timestamp)
+        description: '{{ doc("orders_docs") }}'
+        columns:
+          - name: order_id
+            description: id unico da tabela
+            tests:
+              - unique
+              - not_null
+          - name: customer_id
+            tests:
+              - relationships:
+                  field: customer_id
+                  to: source('northwind', 'customers')
+
+      - name: customers
+        description: Tabela contendo a listagem de clientes do ERP Northwind
+        columns:
+          - name: customer_id
+            description: id unico da tabela
+
+      - name: order_details
+
+      - name: products
+        description: Tabela contendo a listagem de products do ERP Northwind
+        columns:
+          - name: product_id
+            description: id unico da tabela
+
+      - name: suppliers
+        description: Tabela contendo a listagem de suppliers do ERP Northwind
+        columns:
+          - name: supplier_id
+            description: id unico da tabela
